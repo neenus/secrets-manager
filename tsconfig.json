@@ -16,6 +16,12 @@
       ],
       "@routes/*": [
         "routes/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@types/*": [
+        "types/*"
       ]
     },
     "moduleResolution": "node",
