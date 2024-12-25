@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts"
+    "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts"
   },
   "author": "Neenus Gabriel",
   "license": "ISC",
@@ -28,8 +28,8 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
     "cz-conventional-changelog": "^3.3.0",
-    "nodemon": "^3.1.9",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2"
   },
   "config": {

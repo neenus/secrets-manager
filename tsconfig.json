@@ -1,16 +1,31 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "ES2016",
-    "strict": true,
-    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": [
+        "config/*"
+      ],
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@middleware/*": [
+        "middleware/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ]
+    },
+    "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": [
-    "src/**/*.ts",
+    "src"
   ]
 }
