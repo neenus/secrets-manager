@@ -12,6 +12,7 @@ jsonToEnv(config);
 
 // load routes
 import usersRoutes from "@routes/users.routes";
+import secretsRoutes from "@routes/secrets.routes";
 
 const app: Application = express();
 const PORT = parseInt(process.env.PORT as string, 10) || 8888;
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/secrets", secretsRoutes);
 
 // error handler
 app.use(errorHandler);
