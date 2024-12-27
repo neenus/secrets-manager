@@ -1,24 +1,30 @@
 import { Request, Response, NextFunction } from "express";
 import ErrorResponse from "@utils/errorResponse";
 import User from "@models/User";
+import crypto from "crypto";
 
 const authenticateApiKey = async (req: Request, res: Response, next: NextFunction) => {
   const apiKey = req.header("x-api-key");
-  const email = req.body.email;
 
   // check if API key is provided
   if (!apiKey) return next(new ErrorResponse("API Key is invalid", 401));
 
-  // find the user with the provided email
-  const user = await User.findOne({ email });
-  if (!user) return next(new ErrorResponse("User not found", 404));
+  // Derive identifier from the API key
+  const apiKeyIdentifier = crypto.createHash("sha256").update(apiKey).digest("hex").substring(0, 16);
 
-  // validate the API key using the schema method matchApiKey
-  const isMatch = await user.compareHash(apiKey, "apiKey");
-  if (!isMatch) return next(new ErrorResponse("Invalid API Key", 401));
+  try {
+    // find the user with the apiKeyIdentifier
+    const user = await User.findOne({ apiKeyIdentifier });
+    if (!user) return next(new ErrorResponse("Invalid API Key", 404));
 
-  // if the API key is valid, proceed to the next middleware
-  next();
+    // validate the API key using the schema method matchApiKey
+    const isMatch = await user.compareHash(apiKey, "apiKey");
+    if (!isMatch) return next(new ErrorResponse("Invalid API Key", 401));
+
+    next();
+  } catch (error: any) {
+    return next(new ErrorResponse(error.message || "Internal server error", 500));
+  }
 }
 
 export default authenticateApiKey;
