@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import User from "@models/User";
 import ErrorResponse from "@utils/errorResponse";
 import crypto from "crypto";
+import { createApiKeyIdentifier } from "@utils/createApiKeyIdentifier";
 
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email, password } = req.body;
   const apiKey = crypto.randomBytes(24).toString("hex");
-  const apiKeyIdentifier = crypto.createHash("sha256").update(apiKey).digest("hex").substring(0, 16);
+  const apiKeyIdentifier = createApiKeyIdentifier(apiKey);
 
   // check if password is at least 6 characters long
   if (password.length < 6) return next(new ErrorResponse("Password must be at least 6 characters long", 400));
