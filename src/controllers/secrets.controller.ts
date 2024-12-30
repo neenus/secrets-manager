@@ -31,7 +31,7 @@ export const getSecretsByProjectName = async (req: Request, res: Response, next:
       }
     }
 
-    res.status(200).json({ projectName, decryptedSecrets });
+    res.status(200).json(decryptedSecrets);
   } catch (err: any) {
     return next(new ErrorResponse('Internal server error', err.statusCode || 500));
   }
